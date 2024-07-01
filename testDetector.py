@@ -1,4 +1,3 @@
-import wfdb
 import wfdb.processing
 import signalECG
 from AFDetector import AFDetector
