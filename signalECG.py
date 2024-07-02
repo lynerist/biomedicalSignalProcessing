@@ -1,4 +1,5 @@
 import wfdb
+import wfdb.processing
 import functions as f
 
 class Signal:
@@ -8,17 +9,15 @@ class Signal:
     def __init__(self, filename):
         self.record = wfdb.rdrecord(filename)
         self.an = wfdb.rdann(filename, "atr")
+        self.FS = self.an.fs
 
         rr = wfdb.processing.ann2rr(filename, "atr")
         meanrr = sum(rr)/len(rr)
 
-        #This is used to obtain always a signal in milliseconds.
-        orderToMillisec = 3 - (len(str(int(meanrr))) if str(int(meanrr))[0]!="1" else len(str(int(meanrr)))-1)
-
         #I assume that if an rr is greather then 5*mean(rr) then it's an error.
         #The medianFilter would remove them in any case.
         #They are removed here manually to plot meaningfull graphs.
-        self.rrIntervals = [(x if x<5*meanrr else meanrr)*(10**orderToMillisec) /(1000 if f.SECONDS else 1) for x in rr] 
+        self.rrIntervals = [(x if x<5*meanrr else meanrr)/self.FS * (1 if f.SECONDS else 1000) for x in rr] 
 
     def _showRecordValues(self):
         """
@@ -46,7 +45,7 @@ class Signal:
         for attack in self.getAFBeatsAnnotations():
             labels[attack.start:attack.end] = [1]*(attack.duration())
         return labels
-    
+
 class AFAttack:
     """
         Rappresents an Atrial Fibrillation labeled episode.

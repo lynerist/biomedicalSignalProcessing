@@ -1,7 +1,5 @@
-import wfdb.processing
 import signalECG
 from AFDetector import AFDetector
-import functions as f
 from operator import and_, or_
 
 totalTruePositive = 0

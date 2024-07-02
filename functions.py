@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt 
+from parameters import *
 
-SECONDS = True
 AF = "(AFIB"
 N = "(N"
 
@@ -20,9 +20,9 @@ def median3(a, b, c):
     return (b if c>b else (c if a<c else a))
 
 
-def exponentialAverager(data, alpha=0.02):
+def exponentialAverager(data, alpha=ALPHA):
     """
-        Modifies also inplace
+        Modifies also inplace, be carefull
     """
     for i in range(1, len(data)):
         data[i] = alpha*data[i]+ (1-alpha)*data[i-1]
