@@ -19,7 +19,6 @@ def median3(a, b, c):
     if a>b: b,a=a,b
     return (b if c>b else (c if a<c else a))
 
-
 def exponentialAverager(data, alpha=ALPHA):
     """
         Modifies also inplace, be carefull
@@ -27,6 +26,9 @@ def exponentialAverager(data, alpha=ALPHA):
     for i in range(1, len(data)):
         data[i] = alpha*data[i]+ (1-alpha)*data[i-1]
     return data
+
+def FBExponentialAverager(data, alpha=ALPHA):
+    return exponentialAverager(exponentialAverager(data, alpha)[::-1],alpha)[::-1]
 
 def checkTypeList(l):
     return l if isinstance(l, list) else list(l)
