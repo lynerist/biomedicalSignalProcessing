@@ -19,6 +19,7 @@ class AFDetector:
     @staticmethod
     def intervalIrregularity(rrIntervals, N=f.WINDOWLEN, gamma=f.GAMMA):
         rrIntervals = f.checkTypeList(rrIntervals)
+        rrIntervals = AFDetector.ectopicBeatsFiltering(rrIntervals) #Va fatto?!?!?!
 
         M = [(2/(N*(N-1))) * sum([
                                 sum([

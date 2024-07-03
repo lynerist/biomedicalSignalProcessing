@@ -4,7 +4,7 @@ import functions as f
 from operator import and_, or_
 
 database = "database"
-filename = database + "/11"
+filename = database + "/22"
 
 import time
 start_time = time.time()
@@ -14,6 +14,8 @@ afd = AFDetector()
 
 rr = s.rrIntervals
 
+print(len(rr))
+
 rm = afd.ectopicBeatsFiltering(rr)
 rt = afd.estimationRRTrend(rr) 
 ii = afd.intervalIrregularity(rr)
@@ -22,9 +24,9 @@ O = afd.signalFusion(rr)
 detector = afd.detectAF(rr)
 print(f"--- {(time.time() - start_time):.4f} seconds --- to analyze a {int(s.getDuration()/60/60)}h {int(s.getDuration()/60)%60}m long signal")
 
-plotNames = ["rr", "rm", "rt", "It", "Bt", "O"]
+plotNames = ["rr", "rm"]#, "rt", "It", "Bt", "O"]
 
-toPlot = [rr, rm, rt, ii, bt, O]
+toPlot = [rr, rm,]# rt, ii, bt, O]
 
 f.plotSerie(plotNames, toPlot)
 
