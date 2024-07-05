@@ -45,10 +45,10 @@ realAFLabels = s.getAFLabels()
 
 truePositive = sum(map(and_, detector, realAFLabels))
 labeledPositive = sum([a.duration() for a in realAFIntervals])
-sensibility = labeledPositive==0 and 100 or truePositive/labeledPositive*100 
+sensitivity = labeledPositive==0 and 100 or truePositive/labeledPositive*100 
 
 trueNegative = len(detector)-sum(map(or_, detector, realAFLabels))
 labeledNegative = len(detector)-sum([a.duration() for a in realAFIntervals])
 specificity = labeledNegative==0 and 100 or trueNegative/labeledNegative*100 
 
-print(f"sensitivity:{sensibility:.2f}% specificity:{specificity:.2f}%")
+print(f"sensitivity:{sensitivity:.2f}% specificity:{specificity:.2f}%")

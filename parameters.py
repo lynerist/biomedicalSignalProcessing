@@ -1,7 +1,6 @@
 #rr length
 
 SECONDS = True
-IDEAL_RR_INTERVAL = 0.8 if SECONDS else 800
 
 #detector parameters
 

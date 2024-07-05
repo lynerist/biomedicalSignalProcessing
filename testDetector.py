@@ -29,17 +29,17 @@ with open(f"{database}/RECORDS") as r:
 
         truePositive = sum(map(and_, detector, realAFLabels))
         labeledPositive = sum(realAFLabels)
-        sensibility = labeledPositive==0 and 100 or truePositive/labeledPositive*100
+        sensitivity = labeledPositive==0 and 100 or truePositive/labeledPositive*100
 
         trueNegative = len(detector)-sum(map(or_, detector, realAFLabels))
         labeledNegative = len(realAFLabels)-labeledPositive
         specificity = labeledNegative==0 and 100 or trueNegative/labeledNegative*100
 
-        print(f"{filename:3} -> sensibility: {sensibility:.2f}% ({truePositive}/{labeledPositive})\t\tspecificity: {specificity:.2f}% ({trueNegative}/{labeledNegative})")
+        print(f"{filename:3} -> sensitivity: {sensitivity:.2f}% ({truePositive}/{labeledPositive})\t\tspecificity: {specificity:.2f}% ({trueNegative}/{labeledNegative})")
 
         totalTruePositive += truePositive
         totalTrueNegative += trueNegative
         totalLabeledPositive += labeledPositive
         totalLabeledNegative += labeledNegative
 
-    print(f"At the end, {totalTruePositive/totalLabeledPositive*100:.2f}% total sensibility and {totalTrueNegative/totalLabeledNegative*100:.2f}% specificity")
+    print(f"At the end, {totalTruePositive/totalLabeledPositive*100:.2f}% total sensitivity and {totalTrueNegative/totalLabeledNegative*100:.2f}% specificity")
