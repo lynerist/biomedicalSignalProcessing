@@ -19,15 +19,13 @@ class AFDetector:
     @staticmethod
     def intervalIrregularity(rrIntervals, N=f.WINDOWLEN, gamma=f.GAMMA):
         rrIntervals = f.checkTypeList(rrIntervals)
-        rm = AFDetector.ectopicBeatsFiltering(rrIntervals) #Va fatto?!?!?!
-
+        rm = AFDetector.ectopicBeatsFiltering(rrIntervals) 
         M = [(2/(N*(N-1))) * sum([
                                 sum([
-                                    (1 if abs((f.IDEAL_RR_INTERVAL if i-j<0 else rm[i-j]) -
-                                                (f.IDEAL_RR_INTERVAL if i-k<0 else rm[i-k]))-gamma > 0 else 0) 
+                                    (1 if i-j>=0 and i-k>=0 and abs(rm[i-j]-rm[i-k])-gamma > 0 else 0) 
                                         for k in range(j+1, N)]) # I USE N INSTEAD OF N+1 THAT WAS TAKING THE Nth+1 VALUE
                             for j in range(0, N)]) 
-            for i in range(0, len(rm))]       
+            for i in range(0, len(rm))]   
         
         return [m/r for m,r in zip(f.FBExponentialAverager(M), AFDetector.estimationRRTrend(rrIntervals))]
             
@@ -35,7 +33,8 @@ class AFDetector:
     def bigeminySuppression(rrIntervals, N=f.WINDOWLEN):
         rrIntervals = f.checkTypeList(rrIntervals)
         rm = AFDetector.ectopicBeatsFiltering(rrIntervals)
-        return f.FBExponentialAverager([(sum([rm[n-j]for j in range(0, N)]) / sum([rrIntervals[n-j]for j in range(0, N)]) -1)**2 for n in range(0, len(rrIntervals))])
+        return f.FBExponentialAverager([(sum([rm[n-j]for j in range(0, N)]) / sum([rrIntervals[n-j]for j in range(0, N)]) -1)**2 
+                                        for n in range(0, len(rrIntervals))])
 
     @staticmethod
     def signalFusion(rrIntervals, N=f.WINDOWLEN, gamma=f.GAMMA, delta=f.DELTA):
