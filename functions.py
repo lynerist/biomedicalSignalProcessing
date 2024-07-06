@@ -18,7 +18,6 @@ def plotSerie(names, rrIntervals):
         plt.plot(r, linewidth=0.3)
     plt.show()
     
-
 def median3(a, b, c):
     if a>b: b,a=a,b
     return (b if c>b else (c if a<c else a))

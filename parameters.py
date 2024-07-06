@@ -1,5 +1,4 @@
 #rr length
-
 SECONDS = True
 
 #detector parameters
